@@ -1,0 +1,5 @@
+# Saída da compilação
+bin/
+obj/
+*.exe
+*.pdb
