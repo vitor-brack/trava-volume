@@ -895,16 +895,6 @@ namespace TravaVolume
                     Guid context = OwnContext;
                     c.Level.SetLevel((uint)i, c.LockedDb[i], ref context);
                 }
-                // Guarda o valor real caso o aparelho arredonde para os passos dele.
-                float[] actual;
-                bool unused;
-                if (ReadControl(c, out actual, out unused) && actual.Length == c.LockedDb.Length)
-                {
-                    bool close = true;
-                    for (int i = 0; i < actual.Length; i++)
-                        if (Math.Abs(actual[i] - c.LockedDb[i]) > 0.5f) close = false;
-                    if (close) c.LockedDb = actual;
-                }
             }
             else
             {
@@ -1201,14 +1191,8 @@ namespace TravaVolume
                 context = OwnContext;
                 d.Volume.SetMute(d.LockedMute, ref context);
             }
-            // Alguns aparelhos arredondam o volume para os passos deles; guarda o valor real.
-            float actual;
-            if (d.Volume.GetMasterVolumeLevelScalar(out actual) == 0 &&
-                Math.Abs(actual - d.Locked) >= Tolerance && Math.Abs(actual - d.Locked) < 0.03f)
-            {
-                d.Locked = actual;
-                Remember(d);
-            }
+            // O valor travado nunca é relido daqui: com tentativas seguidas, a releitura pode pegar
+            // a próxima mudança do intruso e travar o valor dele no lugar do seu.
             d.Mismatches = 0;
         }
 
