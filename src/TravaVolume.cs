@@ -1530,7 +1530,16 @@ namespace TravaVolume
             }
             enabled = value;
             SaveConfig();
-            Log(value ? "Trava LIGADA por você" : "Trava DESLIGADA por você");
+            if (value)
+            {
+                var levels = new List<string>();
+                foreach (Device d in devices.Values) levels.Add(d.Name + " " + Pct(d.Locked) + (d.LockedMute ? " (silenciado)" : ""));
+                Log("Trava LIGADA por você | travando: " + string.Join(", ", levels.ToArray()));
+            }
+            else
+            {
+                Log("Trava DESLIGADA por você");
+            }
             UpdateTray();
         }
 
