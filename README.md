@@ -30,6 +30,33 @@ Windows 10 ou 11. O compilador C# do .NET Framework 4.x já vem com o Windows, e
 
 Execute `build.cmd`. O programa é gerado em `bin\TravaVolume.exe`.
 
+O `build.cmd` compila os arquivos de `src\` na ordem da lista que ele traz. Ao criar um arquivo novo, acrescente-o à lista.
+
+## Organização do código
+
+Os arquivos ficam em `src\`, na ordem em que o `build.cmd` os compila:
+
+| Arquivo | Conteúdo |
+|---|---|
+| `AssemblyInfo.cs` | Título, produto e versão do programa |
+| `Audio\CoreAudio.cs` | Interfaces COM do Core Audio: dispositivos, volume e mudo, avisos de mudança e sessões de áudio |
+| `Audio\DeviceTopology.cs` | Interfaces COM da topologia do aparelho, de onde saem os controles extras da aba Níveis |
+| `Native.cs` | Funções e estruturas do Win32: Raw Input, janelas, cursor e última entrada do usuário |
+| `Program.cs` | Ponto de entrada; impede abrir duas cópias ao mesmo tempo |
+| `Models.cs` | Dados de cada dispositivo travado e de cada controle extra |
+| `Callbacks.cs` | Recebem os avisos de mudança de volume que o Windows manda |
+| `InputWindow.cs` | Janela invisível que recebe as teclas de volume e de mídia |
+| `Guard.cs` | Classe principal (`Guard`): constantes, campos e construtor |
+| `Guard.Devices.cs` | Encontrar os dispositivos de áudio, começar e parar de protegê-los |
+| `Guard.Controls.cs` | Controles extras da aba Níveis |
+| `Guard.Decisions.cs` | Decidir se uma mudança foi sua (aceita) ou de outro programa (desfeita) |
+| `Guard.RawInput.cs` | Ler as teclas de volume e os sinais de mídia de cada teclado e mouse |
+| `Guard.Helpers.cs` | Comparar níveis, achar nomes de processos, janelas e dispositivos, listar quem está usando o áudio |
+| `Guard.Tray.cs` | Ícone da bandeja, menu, ligar e desligar a trava, balão de aviso e início com o Windows |
+| `Guard.Storage.cs` | Registro, níveis salvos, configuração e encerramento do programa |
+
+A `Guard` é uma classe só, repartida em vários arquivos com `partial class`.
+
 ## Como usar
 
 Abra o `TravaVolume.exe`. Ele fica na bandeja do sistema, perto do relógio:
