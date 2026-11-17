@@ -9,6 +9,15 @@ if not exist "%CSC%" (
   exit /b 1
 )
 if not exist "%~dp0bin" mkdir "%~dp0bin"
-"%CSC%" /nologo /target:winexe /codepage:65001 /optimize+ /platform:anycpu /out:"%~dp0bin\TravaVolume.exe" /r:System.dll /r:System.Core.dll /r:System.Drawing.dll /r:System.Windows.Forms.dll "%~dp0src\TravaVolume.cs"
-if errorlevel 1 exit /b 1
+rem A ordem dos arquivos abaixo é fixa de propósito: o compilador numera os membros na ordem em que lê os
+rem arquivos, e assim o executável sai igual ao que sairia com o código todo num arquivo só.
+rem Ao criar um arquivo novo em src, acrescente-o à lista.
+set "FONTES=Audio\CoreAudio.cs"
+set "FONTES=%FONTES% Audio\DeviceTopology.cs"
+set "FONTES=%FONTES% TravaVolume.cs"
+pushd "%~dp0src"
+"%CSC%" /nologo /target:winexe /codepage:65001 /optimize+ /platform:anycpu /out:"%~dp0bin\TravaVolume.exe" /r:System.dll /r:System.Core.dll /r:System.Drawing.dll /r:System.Windows.Forms.dll %FONTES%
+set "RESULTADO=%errorlevel%"
+popd
+if not "%RESULTADO%"=="0" exit /b 1
 echo Pronto: bin\TravaVolume.exe
