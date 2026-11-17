@@ -14,6 +14,7 @@ rem arquivos, e assim o executável sai igual ao que sairia com o código todo n
 rem Ao criar um arquivo novo em src, acrescente-o à lista.
 set "FONTES=Audio\CoreAudio.cs"
 set "FONTES=%FONTES% Audio\DeviceTopology.cs"
+set "FONTES=%FONTES% Native.cs"
 set "FONTES=%FONTES% TravaVolume.cs"
 pushd "%~dp0src"
 "%CSC%" /nologo /target:winexe /codepage:65001 /optimize+ /platform:anycpu /out:"%~dp0bin\TravaVolume.exe" /r:System.dll /r:System.Core.dll /r:System.Drawing.dll /r:System.Windows.Forms.dll %FONTES%
