@@ -17,6 +17,7 @@ set "FONTES=%FONTES% Audio\CoreAudio.cs"
 set "FONTES=%FONTES% Audio\DeviceTopology.cs"
 set "FONTES=%FONTES% Native.cs"
 set "FONTES=%FONTES% Program.cs"
+set "FONTES=%FONTES% Models.cs"
 set "FONTES=%FONTES% TravaVolume.cs"
 pushd "%~dp0src"
 "%CSC%" /nologo /target:winexe /codepage:65001 /optimize+ /platform:anycpu /out:"%~dp0bin\TravaVolume.exe" /r:System.dll /r:System.Core.dll /r:System.Drawing.dll /r:System.Windows.Forms.dll %FONTES%
